@@ -1,0 +1,15 @@
+{
+  "name": "musicbot",
+  "version": "0.0.1",
+  "description": "Music bot",
+  "main": "index.js",
+  "scripts": {
+    "deployCommands": "node deploy-commands.js",
+    "bot": "node index.js"
+  },
+  "author": "Rosa",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "discord.js": "^14.16.3"
+  }
+}
