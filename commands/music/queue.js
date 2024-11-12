@@ -20,8 +20,8 @@ module.exports = {
         let msg = `:notes: Current queue: ${queue.tracks.size} entr${queue.tracks.size > 1 ? "ies" : "y"}\n`;
 
         for (let i = 0; i < queue.tracks.size; i++) {
-            console.dir(queue.tracks.at(i));
-            let trackDesc = `${i+1}. ${GetTrackInfo(queue.tracks.at(i))}\n`;
+            const track = queue.tracks.at(i);
+            let trackDesc = `${i+1}. ${GetTrackInfo(track)} [${track.duration}]\n`;
 
             if ((msg + trackDesc).length > 2000) {
                 //queueStrings.push(trackDesc);

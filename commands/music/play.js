@@ -19,19 +19,43 @@ module.exports = {
         const query = interaction.options.getString('query');
 
         await interaction.deferReply();
-
-        //console.log(interaction.client.player);
-
-        console.dir(interaction.member);
-
+        
         try {
-            const { track } = await player.play(vc, query, {
-                nodeOptions:  {
-                    metadata: interaction
-                }
+            const result = await player.search(query, {
+                requestedBy: interaction.user
             });
-            
-            return interaction.followUp(`:notes: Adding **${GetTrackInfo(track)}** to the queue!`);
+
+            if (!result || !result.tracks.length) {
+                return interaction.followUp({ content: `:x: No track found for ${query}.`, ephemeral: true });
+            }
+
+            const { playlist, tracks } = result;
+            const queue = player.nodes.create(interaction.guild, {
+                metadata: interaction,
+                selfDeaf: true
+            });;
+
+            try {
+                if (!queue.connection) await queue.connect(vc);
+            } catch (err) {
+                console.error(err);
+                queue.destroy();
+                return interaction.followUp({ content: 'Could not join your voice channel.', ephemeral: true });
+            }
+
+            if (playlist) {
+                for (const track of tracks) {
+                    track.metadata = interaction;
+                    queue.addTrack(track);
+                }
+                queue.node.play();
+                return interaction.followUp(`:notes: Adding **${tracks.length}** tracks to the queue!`);
+            } else {
+                const track = tracks[0];
+                track.metadata = interaction;
+                queue.play(track);
+                return interaction.followUp(`:notes: Adding **${GetTrackInfo(tracks[0])}** to the queue!`);
+            }
         } catch (err) {
             console.error(`Error while getting track:`, err);
             return interaction.followUp({ content: `:x: Something went wrong: ${err}`, ephemeral: true });

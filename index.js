@@ -50,10 +50,6 @@ client.player = new Player(client);
         queue.metadata.channel.send(`Now playing **${track.title}**`);
     });
 
-    client.player.on('trackAdd', (queue, track) => {
-        queue.metadata.channel.send(`Track **${track.title}** added to the queue`);
-    });
-
     client.player.on('error', (queue, error) => {
         console.error(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
     });

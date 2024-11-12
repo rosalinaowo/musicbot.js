@@ -1,11 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { useMainPlayer } =  require('discord-player');
-const { GetTrackInfo } = require('../../utils');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('skip')
-        .setDescription('Skips the currently playing song.'),
+        .setName('shuffle')
+        .setDescription('Shuffles the queue.'),
     async execute(interaction) {
         const player = useMainPlayer();
         const vc = interaction.member.voice.channel;
@@ -18,8 +17,7 @@ module.exports = {
             return interaction.reply({ content: ':x: There is no song currently playing.', ephemeral: true });
         }
 
-        const track = queue.currentTrack;
-        queue.node.skip();
-        return interaction.reply(`:fast_forward: Skipped: ${GetTrackInfo(track)}`);
+        queue.tracks.shuffle();
+        return interaction.reply(`:notes: Shuffled ${queue.tracks.size} songs`);
     }
 }

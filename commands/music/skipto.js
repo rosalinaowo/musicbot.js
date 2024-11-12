@@ -25,7 +25,7 @@ module.exports = {
             return interaction.reply({ content: ':x: There is no song currently playing.', ephemeral: true });
         }
 
-        const track = queue.tracks[trackindex];
+        const track = queue.tracks.at(trackindex);
         queue.node.skipTo(track);
         return interaction.reply(`:fast_forward: Skipped to: ${track.title}`);
     }

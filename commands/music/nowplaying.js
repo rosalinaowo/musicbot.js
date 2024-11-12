@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { useMainPlayer } =  require('discord-player');
-const { GetTrackInfo } = require('../../utils');
 
 module.exports = {
     data: new SlashCommandBuilder()
