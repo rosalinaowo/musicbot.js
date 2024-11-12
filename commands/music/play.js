@@ -33,7 +33,7 @@ module.exports = {
             const queue = player.nodes.create(interaction.guild, {
                 metadata: interaction,
                 selfDeaf: true
-            });;
+            });
 
             try {
                 if (!queue.connection) await queue.connect(vc);
