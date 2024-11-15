@@ -27,3 +27,8 @@ Start the bot:
 ```bash
 npm run bot
 ```
+
+**(Optional)** Login with a throwaway YouTube account:
+```bash
+npx --no discord-player-youtubei
+```
