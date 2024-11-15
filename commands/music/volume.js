@@ -24,13 +24,13 @@ module.exports = {
 
         const volume = interaction.options.getNumber('volume');
         if (!volume) {
-            return interaction.reply(`:information_source: Current volume is ${queue.node.volume}`);
+            return interaction.reply(`:information_source: Current volume is **${queue.node.volume}**`);
         }
         if (volume < 0 || volume > maxVol) {
             return interaction.reply({ content: `:x: Invalid value provided (0-${maxVol}).`, ephemeral: true });
         }
         
         queue.node.setVolume(volume);
-        return interaction.reply(`:information_source: Set the volume to ${volume}`);
+        return interaction.reply(`:information_source: Set the volume to **${volume}**`);
     }
 }

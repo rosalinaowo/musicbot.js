@@ -46,19 +46,7 @@ client.player = new Player(client);
 
     client.login(token);
 
-    client.player.on('trackStart', (queue, track) => {
-        queue.metadata.channel.send(`Now playing **${track.title}**`);
-    });
-
     client.player.on('error', (queue, error) => {
         console.error(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
-    });
-
-    client.player.on('connectionError', (queue, error) => {
-        console.error(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
-    });
-
-    client.player.on('queueEnd', (queue) => {
-        queue.metadata.channel.send('The queue has ended.');
     });
 })();
