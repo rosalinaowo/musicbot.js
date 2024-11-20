@@ -48,7 +48,9 @@ module.exports = {
                     track.metadata = interaction;
                     queue.addTrack(track);
                 }
-                queue.node.play();
+                if (!queue || !queue.currentTrack) {
+                    queue.node.play();
+                }
                 return interaction.followUp(`:notes: Adding **${tracks.length}** tracks to the queue!`);
             } else {
                 const track = tracks[0];
