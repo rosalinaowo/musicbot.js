@@ -9,7 +9,11 @@ module.exports = {
         .addStringOption(option => 
             option.setName('query')
                 .setDescription('The URL or search query for the song.')
-                .setRequired(true)),
+                .setRequired(true))
+        .addBooleanOption(option =>
+            option.setName('playfirst')
+                .setDescription('Places the track as the first in the queue.')
+                .setRequired(false)),
     async execute(interaction) {
         const player = useMainPlayer();
         const vc = interaction.member.voice.channel;
@@ -17,6 +21,7 @@ module.exports = {
             return interaction.reply({ content: ':x: You are not in a voice channel.', ephemeral: true });
         }
         const query = interaction.options.getString('query');
+        var playFirst = interaction.options.getBoolean('playfirst');
 
         await interaction.deferReply();
         
@@ -55,8 +60,13 @@ module.exports = {
             } else {
                 const track = tracks[0];
                 track.metadata = interaction;
-                queue.play(track);
-                return interaction.followUp(`:notes: Adding **${GetTrackInfo(tracks[0])}** to the queue!`);
+                if (playFirst) {
+                    queue.insertTrack(track, 0);
+                    return interaction.followUp(`:notes: Adding **${GetTrackInfo(tracks[0])}** as the next track!`);
+                } else {
+                    queue.play(track);
+                    return interaction.followUp(`:notes: Adding **${GetTrackInfo(tracks[0])}** to the queue!`);
+                }
             }
         } catch (err) {
             console.error(`Error while getting track:`, err);
