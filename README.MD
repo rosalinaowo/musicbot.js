@@ -18,6 +18,11 @@ Create a `config.json` file based on [this example](./config.example.json):
 }
 ```
 
+Compile typescript:
+```bash
+npm run build
+```
+
 Deploy the bots slash commands:
 ```bash
 npm run deployCommands

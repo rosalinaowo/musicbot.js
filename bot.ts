@@ -1,11 +1,12 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
-const { Player } = require('discord-player');
-const { YoutubeiExtractor } = require('discord-player-youtubei');
-const { token } = require('./config.json');
+import fs from 'node:fs';
+import path from 'node:path';
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import { GuildQueue, Player } from 'discord-player';
+import { YoutubeiExtractor } from 'discord-player-youtubei';
+import { token } from './config.json';
+import { PlayerClient } from './types';
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] }) as PlayerClient;
 client.player = new Player(client);
 
 async function startBot() {
@@ -46,9 +47,9 @@ async function startBot() {
 
     client.login(token);
 
-    client.player.on('error', (queue, error) => {
-        console.error(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
+    client.player.on('error', (error: Error) => {
+        console.error(`Error emitted from the queue: ${error.message}`);
     });
 };
 
-module.exports = { client, startBot };
+export { client, startBot };

@@ -1,6 +1,6 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { useMainPlayer } =  require('discord-player');
-const { GetTrackInfo } = require('../../utils');
+import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { useMainPlayer } from 'discord-player';
+import { GetTrackInfo } from '../../utils';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,9 +14,9 @@ module.exports = {
             option.setName('playfirst')
                 .setDescription('Places the track as the first in the queue.')
                 .setRequired(false)),
-    async execute(interaction) {
+    async execute(interaction: CommandInteraction) {
         const player = useMainPlayer();
-        const vc = interaction.member.voice.channel;
+        const vc = interaction.member!.voice!.channel;
         if (!vc) {
             return interaction.reply({ content: ':x: You are not in a voice channel.', ephemeral: true });
         }
