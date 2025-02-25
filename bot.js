@@ -49,11 +49,6 @@ async function startBot() {
     client.player.on('error', (queue, error) => {
         console.error(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
     });
-
-    // client.once('ready', () => {
-    //     console.log('Guilds: ');
-    //     console.dir(client.guilds.cache);
-    // });
 };
 
 module.exports = { client, startBot };
