@@ -34,8 +34,9 @@ async function getGuildPlayerStatus(client, guildId) {
 
     const playerNode = client.player.nodes.get(guildId);
     if (!playerNode) {
-        console.error(`Player node for guild ${guildId} not found.`);
-        return null;
+        try {
+            playerNode = await client.player.nodes.fetch(guildId);
+        } catch {}
     }
 
     return playerNode;
